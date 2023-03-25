@@ -108,6 +108,43 @@ class CoinGeckoAPI:
         df3 = pd.DataFrame(all_marketcap, columns=['coin', 'ts', 'market_cap'])
         merged_df = pd.merge(pd.merge(df1, df2, on=['coin', 'ts']), df3, on=['coin', 'ts'])
         return merged_df
+    # arguments accepted are 1,7,14,30,90,180,365,max
+    '''
+    candles body:
+    1 - 2 days: 30 minutes
+    3 - 30 days: 4 hours
+    31 days and beyond: 4 days
+    '''
+    def ohlc(self,coin_id,days='max'):
+        url = f"{self.base_url}/coins/{coin_id}/ohlc?vs_currency=usd&days={days}"
+        response = requests.get(url)
+        response_json = response.json()
+        df1 = pd.DataFrame(response_json, columns=['ts', 'open', 'high','low','close'])
+        return df1
 
     def historical_data(self,coin_id,date):
-        return something
+        url = f"{self.base_url}/coins/{coin_id}/history?date={date}"
+        response = requests.get(url)
+        response_json = response.json()
+        history_data=[]
+        for k,v in response_json.items():
+            price_data=[response_json['market_data']['current_price'] for k,v in response_json.items()]
+            hist_price=price_data[0]['usd']
+            volume_data=[response_json['market_data']['total_volume'] for k,v in response_json.items()]
+            hist_volume=volume_data[0]['usd']
+            mc_data=[response_json['market_data']['market_cap'] for k,v in response_json.items()]
+            hist_mc=mc_data[0]['usd']
+            community_data=[response_json['community_data'] for k,v in response_json.items()][0]
+
+
+            history_data.append(hist_price)
+            history_data.append(hist_volume)
+            history_data.append(hist_mc)
+            history_data.append(community_data['facebook_likes'])
+            history_data.append(community_data['twitter_followers'])
+            history_data.append(community_data['reddit_average_posts_48h'])
+            history_data.append(community_data['reddit_average_comments_48h'])
+            history_data.append(community_data['reddit_subscribers'])
+            history_data.append(community_data['reddit_accounts_active_48h'])
+
+            return history_data
