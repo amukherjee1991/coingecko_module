@@ -26,6 +26,7 @@ This method retrieves list of coins on coingecko on current date
 This method do not need any Parameters
 ```
 `all_price_data_daily(self,coin_id,days='max'`
+
 This method retrieves price data for a particular coin based on its `coin_id` and `days`.
 days is max by default and both the parameters are `str`.
 `all_volume_data_daily` and `all_marketcap_data_daily` does the same for volume and marketcap respectively.
