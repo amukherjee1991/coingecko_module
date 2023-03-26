@@ -5,7 +5,14 @@ class CoinGeckoAPI:
     def __init__(self, base_url='https://api.coingecko.com/api/v3/'):
         self.base_url = base_url
 
+    '''
+    This function gets current_price
+    :para param1: coin_id
+    :type param1: str
+    '''
     def get_price_current(self, coin_id):
+        if not isinstance(coin_id, str):
+            raise TypeError("coin_id must be a string")
         url = f"{self.base_url}/simple/price?ids={coin_id}&vs_currencies=usd"
         response = requests.get(url)
         response_json = response.json()
@@ -13,6 +20,8 @@ class CoinGeckoAPI:
         return price
 
     def get_volume_current(self, coin_id):
+        if not isinstance(coin_id, str):
+            raise TypeError("coin_id must be a string")
         url = f"{self.base_url}/coins/{coin_id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false"
         response = requests.get(url)
         response_json = response.json()
@@ -20,6 +29,8 @@ class CoinGeckoAPI:
         return volume
 
     def get_marketcap_current(self, coin_id):
+        if not isinstance(coin_id, str):
+            raise TypeError("coin_id must be a string")
         url = f"{self.base_url}/coins/{coin_id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false"
         response = requests.get(url)
         response_json = response.json()
@@ -37,6 +48,8 @@ class CoinGeckoAPI:
         return coin_list
 
     def all_price_data_daily(self,coin_id,days='max'):
+        if not isinstance(days, str) or not isinstance(days, str):
+            raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/market_chart?vs_currency=usd&days={days}&interval=daily"
         response = requests.get(url)
         response_json = response.json()
@@ -50,6 +63,8 @@ class CoinGeckoAPI:
         return all_prices
 
     def all_marketcap_data_daily(self,coin_id,days='max'):
+        if not isinstance(days, str) or not isinstance(days, str):
+            raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/market_chart?vs_currency=usd&days={days}&interval=daily"
         response = requests.get(url)
         response_json = response.json()
@@ -63,6 +78,8 @@ class CoinGeckoAPI:
         return all_marketcap
 
     def all_volume_data_daily(self,coin_id,days='max'):
+        if not isinstance(days, str) or not isinstance(days, str):
+            raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/market_chart?vs_currency=usd&days={days}&interval=daily"
         response = requests.get(url)
         response_json = response.json()
@@ -79,6 +96,8 @@ class CoinGeckoAPI:
 
 
     def pvmc_daily(self,coin_id,days='max'):
+        if not isinstance(days, str) or not isinstance(days, str):
+            raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/market_chart?vs_currency=usd&days={days}&interval=daily"
         response = requests.get(url)
         response_json = response.json()
@@ -116,6 +135,8 @@ class CoinGeckoAPI:
     31 days and beyond: 4 days
     '''
     def ohlc(self,coin_id,days='max'):
+        if not isinstance(days, str) or not isinstance(days, str):
+            raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/ohlc?vs_currency=usd&days={days}"
         response = requests.get(url)
         response_json = response.json()
@@ -123,6 +144,8 @@ class CoinGeckoAPI:
         return df1
 
     def historical_data(self,coin_id,date):
+        if not isinstance(days, str) or not isinstance(date, str):
+            raise TypeError("coin_id and date must be a string")
         url = f"{self.base_url}/coins/{coin_id}/history?date={date}"
         response = requests.get(url)
         response_json = response.json()
