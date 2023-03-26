@@ -18,7 +18,11 @@ class CoinGeckoAPI:
         response_json = response.json()
         price = response_json[coin_id]['usd']
         return price
-
+    '''
+    This function gets current_volume
+    :para param1: coin_id
+    :type param1: str
+    '''
     def get_volume_current(self, coin_id):
         if not isinstance(coin_id, str):
             raise TypeError("coin_id must be a string")
@@ -27,7 +31,11 @@ class CoinGeckoAPI:
         response_json = response.json()
         volume = response_json['market_data']['total_volume']['usd']
         return volume
-
+    '''
+    This function gets current_marketcap
+    :para param1: coin_id
+    :type param1: str
+    '''
     def get_marketcap_current(self, coin_id):
         if not isinstance(coin_id, str):
             raise TypeError("coin_id must be a string")
@@ -37,6 +45,9 @@ class CoinGeckoAPI:
         market_cap = response_json['market_data']['market_cap']['usd']
         return market_cap
 
+    '''
+    This function gets list of all coins on coingecko
+    '''
     def coins(self):
         coin_list=[]
         url = f"{self.base_url}/coins/list"
@@ -47,6 +58,14 @@ class CoinGeckoAPI:
         coin_list=[data['id'] for data in response_json]
         return coin_list
 
+    '''
+    This function gets all prices based on parameter
+    :para param1: coin_id
+    :type param1: str
+    :para param2: days
+    :type param2: str
+    :default param2: max
+    '''
     def all_price_data_daily(self,coin_id,days='max'):
         if not isinstance(days, str) or not isinstance(days, str):
             raise TypeError("coin_id and days must be a string")
@@ -62,6 +81,14 @@ class CoinGeckoAPI:
         	all_prices.append(prices)
         return all_prices
 
+    '''
+    This function gets all marketcap based on parameter
+    :para param1: coin_id
+    :type param1: str
+    :para param2: days
+    :type param2: str
+    :default param2: max
+    '''
     def all_marketcap_data_daily(self,coin_id,days='max'):
         if not isinstance(days, str) or not isinstance(days, str):
             raise TypeError("coin_id and days must be a string")
@@ -76,7 +103,14 @@ class CoinGeckoAPI:
         	marketcap.append(p[1])
         	all_marketcap.append(marketcap)
         return all_marketcap
-
+    '''
+    This function gets all volume based on parameter
+    :para param1: coin_id
+    :type param1: str
+    :para param2: days
+    :type param2: str
+    :default param2: max
+    '''
     def all_volume_data_daily(self,coin_id,days='max'):
         if not isinstance(days, str) or not isinstance(days, str):
             raise TypeError("coin_id and days must be a string")
@@ -93,7 +127,15 @@ class CoinGeckoAPI:
         	all_volume.append(volume)
         return all_volume
 
-
+    '''
+    This function gets all price,volume and marketcap based on parameter
+    :para param1: coin_id
+    :type param1: str
+    :para param2: days
+    :type param2: str
+    :default param2: max
+    :returns data as a pandas df
+    '''
 
     def pvmc_daily(self,coin_id,days='max'):
         if not isinstance(days, str) or not isinstance(days, str):
@@ -127,12 +169,22 @@ class CoinGeckoAPI:
         df3 = pd.DataFrame(all_marketcap, columns=['coin', 'ts', 'market_cap'])
         merged_df = pd.merge(pd.merge(df1, df2, on=['coin', 'ts']), df3, on=['coin', 'ts'])
         return merged_df
-    # arguments accepted are 1,7,14,30,90,180,365,max
+
     '''
     candles body:
     1 - 2 days: 30 minutes
     3 - 30 days: 4 hours
     31 days and beyond: 4 days
+    arguments accepted are 1,7,14,30,90,180,365,max
+
+    This function gets OHLC based on parameter
+    :para param1: coin_id
+    :type param1: str
+    :para param2: days
+    :type param2: str
+    :default param2: max
+    :returns data as a pandas df
+
     '''
     def ohlc(self,coin_id,days='max'):
         if not isinstance(days, str) or not isinstance(days, str):
@@ -143,6 +195,17 @@ class CoinGeckoAPI:
         df1 = pd.DataFrame(response_json, columns=['ts', 'open', 'high','low','close'])
         return df1
 
+    '''
+    This function gets historical data based on coin_id and date
+    :para param1: coin_id
+    :type param1: str
+    :para param2: days
+    :type param2: str
+    :default param2: max
+    :returns a list (history_data)
+    :date format DD-MM-YYYY
+
+    '''
     def historical_data(self,coin_id,date):
         if not isinstance(days, str) or not isinstance(date, str):
             raise TypeError("coin_id and date must be a string")
@@ -158,7 +221,6 @@ class CoinGeckoAPI:
             mc_data=[response_json['market_data']['market_cap'] for k,v in response_json.items()]
             hist_mc=mc_data[0]['usd']
             community_data=[response_json['community_data'] for k,v in response_json.items()][0]
-
 
             history_data.append(hist_price)
             history_data.append(hist_volume)
