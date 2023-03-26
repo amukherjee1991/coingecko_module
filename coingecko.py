@@ -182,14 +182,16 @@ class CoinGeckoAPI:
     :type param1: str
     :para param2: days
     :type param2: str
-    :default param2: max
+    :para param3: curr
+    :type param3: str
+    :default param3: usd
     :returns data as a pandas df
 
     '''
-    def ohlc(self,coin_id,days='max'):
+    def ohlc(self,coin_id,days='max',curr='usd'):
         if not isinstance(days, str) or not isinstance(days, str):
             raise TypeError("coin_id and days must be a string")
-        url = f"{self.base_url}/coins/{coin_id}/ohlc?vs_currency=usd&days={days}"
+        url = f"{self.base_url}/coins/{coin_id}/ohlc?vs_currency={curr}&days={days}"
         response = requests.get(url)
         response_json = response.json()
         df1 = pd.DataFrame(response_json, columns=['ts', 'open', 'high','low','close'])
