@@ -30,3 +30,9 @@ This method do not need any Parameters
 This method retrieves price data for a particular coin based on its `coin_id` and `days`.
 days is max by default and both the parameters are `str`.
 `all_volume_data_daily` and `all_marketcap_data_daily` does the same for volume and marketcap respectively.
+
+```Parameters
+coin_id (str): The ID of the cryptocurrency, as defined by CoinGecko.
+days (str): Number of days for which you want to retrieve the data.
+Returns The current price of the cryptocurrency in USD (float).
+```
