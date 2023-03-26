@@ -17,6 +17,15 @@ get_volume_current and get_marketcap_current are similar and accepts the same Pa
 
 ```Parameters
 coin_id (str): The ID of the cryptocurrency, as defined by CoinGecko.
-Returns
-The current price of the cryptocurrency in USD (float).
+Returns The current price of the cryptocurrency in USD (float).
 ```
+`get_coins()`
+This method retrieves list of coins on coingecko on current date
+
+```Parameters
+This method do not need any Parameters
+```
+`all_price_data_daily(self,coin_id,days='max'`
+This method retrieves price data for a particular coin based on its `coin_id` and `days`.
+days is max by default and both the parameters are `str`.
+`all_volume_data_daily` and `all_marketcap_data_daily` does the same for volume and marketcap respectively.
