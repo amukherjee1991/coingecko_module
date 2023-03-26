@@ -34,5 +34,5 @@ days is max by default and both the parameters are `str`.
 ```Parameters
 coin_id (str): The ID of the cryptocurrency, as defined by CoinGecko.
 days (str): Number of days for which you want to retrieve the data.
-Returns The current price of the cryptocurrency in USD (float).
+Returns a list of all price.
 ```
