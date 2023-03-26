@@ -1,4 +1,4 @@
-# CoinGeckoAPI class
+# CoinGeckoAPI
 
 The `CoinGeckoAPI` class provides a simple interface for accessing cryptocurrency prices from the CoinGecko API.
 
