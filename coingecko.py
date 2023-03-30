@@ -209,29 +209,34 @@ class CoinGeckoAPI:
 
     '''
     def historical_data(self,coin_id,date):
-        if not isinstance(days, str) or not isinstance(date, str):
+        if not isinstance(coin_id, str) or not isinstance(date, str):
             raise TypeError("coin_id and date must be a string")
         url = f"{self.base_url}/coins/{coin_id}/history?date={date}"
         response = requests.get(url)
         response_json = response.json()
         history_data=[]
         for k,v in response_json.items():
-            price_data=[response_json['market_data']['current_price'] for k,v in response_json.items()]
-            hist_price=price_data[0]['usd']
-            volume_data=[response_json['market_data']['total_volume'] for k,v in response_json.items()]
-            hist_volume=volume_data[0]['usd']
-            mc_data=[response_json['market_data']['market_cap'] for k,v in response_json.items()]
-            hist_mc=mc_data[0]['usd']
-            community_data=[response_json['community_data'] for k,v in response_json.items()][0]
+            try:
 
-            history_data.append(hist_price)
-            history_data.append(hist_volume)
-            history_data.append(hist_mc)
-            history_data.append(community_data['facebook_likes'])
-            history_data.append(community_data['twitter_followers'])
-            history_data.append(community_data['reddit_average_posts_48h'])
-            history_data.append(community_data['reddit_average_comments_48h'])
-            history_data.append(community_data['reddit_subscribers'])
-            history_data.append(community_data['reddit_accounts_active_48h'])
+                price_data=[response_json['market_data']['current_price'] for k,v in response_json.items()]
+                hist_price=price_data[0]['usd']
+                volume_data=[response_json['market_data']['total_volume'] for k,v in response_json.items()]
+                hist_volume=volume_data[0]['usd']
+                mc_data=[response_json['market_data']['market_cap'] for k,v in response_json.items()]
+                hist_mc=mc_data[0]['usd']
+                community_data=[response_json['community_data'] for k,v in response_json.items()][0]
+
+                history_data.append(hist_price)
+                history_data.append(hist_volume)
+                history_data.append(hist_mc)
+                history_data.append(community_data['facebook_likes'])
+                history_data.append(community_data['twitter_followers'])
+                history_data.append(community_data['reddit_average_posts_48h'])
+                history_data.append(community_data['reddit_average_comments_48h'])
+                history_data.append(community_data['reddit_subscribers'])
+                history_data.append(community_data['reddit_accounts_active_48h'])
+            except KeyError:
+                print('market_data do not exist')
+                history_data=["","","","","","","","",""]
 
             return history_data
