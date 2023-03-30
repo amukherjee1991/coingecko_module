@@ -90,7 +90,7 @@ class CoinGeckoAPI:
     :default param2: max
     '''
     def all_marketcap_data_daily(self,coin_id,days='max'):
-        if not isinstance(days, str) or not isinstance(days, str):
+        if not isinstance(coin_id, str) or not isinstance(days, str):
             raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/market_chart?vs_currency=usd&days={days}&interval=daily"
         response = requests.get(url)
@@ -112,7 +112,7 @@ class CoinGeckoAPI:
     :default param2: max
     '''
     def all_volume_data_daily(self,coin_id,days='max'):
-        if not isinstance(days, str) or not isinstance(days, str):
+        if not isinstance(coin_id, str) or not isinstance(days, str):
             raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/market_chart?vs_currency=usd&days={days}&interval=daily"
         response = requests.get(url)
@@ -138,7 +138,7 @@ class CoinGeckoAPI:
     '''
 
     def pvmc_daily(self,coin_id,days='max'):
-        if not isinstance(days, str) or not isinstance(days, str):
+        if not isinstance(coin_id, str) or not isinstance(days, str):
             raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/market_chart?vs_currency=usd&days={days}&interval=daily"
         response = requests.get(url)
@@ -189,7 +189,7 @@ class CoinGeckoAPI:
 
     '''
     def ohlc(self,coin_id,days='max',curr='usd'):
-        if not isinstance(days, str) or not isinstance(days, str):
+        if not isinstance(coin_id, str) or not isinstance(days, str):
             raise TypeError("coin_id and days must be a string")
         url = f"{self.base_url}/coins/{coin_id}/ohlc?vs_currency={curr}&days={days}"
         response = requests.get(url)
