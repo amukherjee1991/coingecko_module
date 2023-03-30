@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-
+import urllib.request
 class CoinGeckoAPI:
     def __init__(self, base_url='https://api.coingecko.com/api/v3/'):
         self.base_url = base_url
